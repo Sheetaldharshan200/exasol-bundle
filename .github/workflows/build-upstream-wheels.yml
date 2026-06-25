@@ -37,7 +37,6 @@ jobs:
         with:
           python-version: '3.11'
 
-      # === THE FIX: Auto-detect where the Exasol team put the Rust code ===
       - name: Find Cargo.toml Directory
         id: locate-rust
         shell: bash
@@ -49,20 +48,19 @@ jobs:
           fi
           PROJECT_DIR=$(dirname "$CARGO_FILE")
           echo "Found Rust project hiding at: $PROJECT_DIR"
-          
-          # Pass this directory to the next step
           echo "dir=$PROJECT_DIR" >> $GITHUB_OUTPUT
+
+        # === THE FIX: Conditionally apply the Assembly bypass ONLY for Linux ARM ===
+      - name: Configure Linux ARM Fallbacks
+        if: matrix.os == 'ubuntu-latest' && matrix.target == 'aarch64'
+        shell: bash
+        run: echo "AWS_LC_SYS_NO_ASM=1" >> $GITHUB_ENV
 
       - name: Build wheels via Maturin
         uses: PyO3/maturin-action@v1
-        env:
-          # Bypasses the strict Assembly compilation that crashes cross-compilers
-          AWS_LC_SYS_NO_ASM: 1
         with:
-          # Tell Maturin exactly where to execute
           working-directory: ${{ steps.locate-rust.outputs.dir }}
           target: ${{ matrix.target }}
-          # Force it to push the output wheels back to our absolute root directory
           args: --release --out ${{ github.workspace }}/dist
           manylinux: 2_28
 
