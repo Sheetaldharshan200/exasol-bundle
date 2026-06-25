@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "exa-bundle"
+name = "exasol-bundle"  
 version = "1.0.0"
 description = "Universal orchestrator for the Exasol tooling ecosystem"
 readme = "README.md"
