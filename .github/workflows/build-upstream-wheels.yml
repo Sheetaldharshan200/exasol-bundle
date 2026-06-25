@@ -8,9 +8,6 @@ on:
         description: 'Tag or branch of exasol-json-tables to build (e.g., main or v1.2.0)'
         required: true
         default: 'main'
-  schedule:
-    # Runs at 00:00 every Sunday automatically
-    - cron: '0 0 * * 0'
 
 jobs:
   build-wheels:
@@ -26,7 +23,6 @@ jobs:
             target: aarch64
 
     steps:
-      # CRITICAL FIX: Pointing to exasol-labs instead of exasol
       - name: Checkout Upstream Repo
         uses: actions/checkout@v4
         with:
@@ -38,11 +34,30 @@ jobs:
         with:
           python-version: '3.11'
 
+      # === THE FIX: Auto-detect where the Exasol team put the Rust code ===
+      - name: Find Cargo.toml Directory
+        id: locate-rust
+        shell: bash
+        run: |
+          CARGO_FILE=$(find . -name "Cargo.toml" -type f | head -n 1)
+          if [ -z "$CARGO_FILE" ]; then
+            echo "Error: No Cargo.toml found in the repository!"
+            exit 1
+          fi
+          PROJECT_DIR=$(dirname "$CARGO_FILE")
+          echo "Found Rust project hiding at: $PROJECT_DIR"
+          
+          # Pass this directory to the next step
+          echo "dir=$PROJECT_DIR" >> $GITHUB_OUTPUT
+
       - name: Build wheels via Maturin
         uses: PyO3/maturin-action@v1
         with:
+          # Tell Maturin exactly where to execute
+          working-directory: ${{ steps.locate-rust.outputs.dir }}
           target: ${{ matrix.target }}
-          args: --release --out dist
+          # Force it to push the output wheels back to our absolute root directory
+          args: --release --out ${{ github.workspace }}/dist
           manylinux: auto
 
       - name: Upload temporary artifacts
