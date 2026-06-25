@@ -1,9 +1,11 @@
 name: Build Upstream Rust Wheels
+
+# Run this manually from the GitHub Actions tab when JSON Tables updates
 on:
-  workflow_dispatch: # Keeps the manual button
+  workflow_dispatch:
     inputs:
       upstream_version:
-        description: 'Tag or branch of exasol-json-tables to build'
+        description: 'Tag or branch of exasol-json-tables to build (e.g., main or v1.2.0)'
         required: true
         default: 'main'
   schedule:
@@ -24,11 +26,11 @@ jobs:
             target: aarch64
 
     steps:
-      # CRITICAL: We check out THEIR repository, not ours
+      # CRITICAL FIX: Pointing to exasol-labs instead of exasol
       - name: Checkout Upstream Repo
         uses: actions/checkout@v4
         with:
-          repository: exasol/exasol-json-tables
+          repository: exasol-labs/exasol-json-tables
           ref: ${{ github.event.inputs.upstream_version }}
 
       - name: Set up Python
@@ -61,7 +63,6 @@ jobs:
           merge-multiple: true
 
       - name: Create 'Dependency' Release and Upload
-        # This attaches the pre-compiled wheels to your exa-bundle repository
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "upstream-dependencies"
