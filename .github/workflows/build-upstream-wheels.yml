@@ -8,6 +8,9 @@ on:
         description: 'Tag or branch of exasol-json-tables to build (e.g., main or v1.2.0)'
         required: true
         default: 'main'
+  schedule:
+    # Runs at 00:00 every Sunday automatically
+    - cron: '0 0 * * 0'
 
 jobs:
   build-wheels:
@@ -52,13 +55,16 @@ jobs:
 
       - name: Build wheels via Maturin
         uses: PyO3/maturin-action@v1
+        env:
+          # Bypasses the strict Assembly compilation that crashes cross-compilers
+          AWS_LC_SYS_NO_ASM: 1
         with:
           # Tell Maturin exactly where to execute
           working-directory: ${{ steps.locate-rust.outputs.dir }}
           target: ${{ matrix.target }}
           # Force it to push the output wheels back to our absolute root directory
           args: --release --out ${{ github.workspace }}/dist
-          manylinux: auto
+          manylinux: 2_28
 
       - name: Upload temporary artifacts
         uses: actions/upload-artifact@v4
