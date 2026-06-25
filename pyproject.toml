@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "exasol-bundle"
+version = "1.0.0"
+description = "Universal bundler for Exasol MCP, JSON Tables, and Personal CLI"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+    { name = "Exasol Open Source", email = "opensource@exasol.com" }
+]
+
+# The meta-package dependencies. Pinned to major versions to prevent breaking changes.
+dependencies = [
+    "exasol-mcp-server>=2.0,<3.0",
+    "exasol-json-tables>=1.0,<2.0"
+]
+
+[project.optional-dependencies]
+# Allows users to install subsets if they want
+mcp = ["exasol-mcp-server>=2.0,<3.0"]
+json-tables = ["exasol-json-tables>=1.0,<2.0"]
+
+[project.scripts]
+# Exposes a manual command to trigger the binary download if the hook fails
+exasol-bundle = "exasol_bundle.cli:main"
