@@ -27,3 +27,5 @@ json-tables = ["exasol-json-tables>=1.0,<2.0"]
 [project.scripts]
 # Exposes a manual command to trigger the binary download if the hook fails
 exasol-bundle = "exasol_bundle.cli:main"
+[tool.setuptools]
+packages = ["exasol_bundle"]
