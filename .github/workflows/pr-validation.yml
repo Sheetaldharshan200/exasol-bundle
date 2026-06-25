@@ -2,10 +2,7 @@ name: PR Validation & Dependency Check
 
 on:
   pull_request:
-    branches:
-      - main
-    # Triggers when PR is opened, updated, or reopened
-    types: [opened, synchronize, reopened]
+    branches: [main]
 
 jobs:
   validate-bundle:
@@ -14,38 +11,16 @@ jobs:
     strategy:
       fail-fast: false # Let all versions run even if one fails
       matrix:
-        # Test across the supported Python versions for your users
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
-
+        python-version: ["3.10", "3.11", "3.12"]
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Set up Python ${{ matrix.python-version }}
+      - uses: actions/checkout@v4
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'pip'
-
-      - name: Upgrade core build tools
-        run: python -m pip install --upgrade pip setuptools wheel
-
-      - name: Install Bundle with ALL Extras
-        # Installing the package with [mcp,json-tables] forces pip to 
-        # resolve all underlying dependencies together in one environment.
-        # If there is a conflict (e.g., differing pyexasol versions), 
-        # pip will fail right here.
-        run: pip install -e ".[mcp,json-tables]"
-
-      - name: Verify Dependency Tree Integrity
-        # 'pip check' scans the installed environment and returns a non-zero 
-        # exit code if any package has broken or conflicting requirements.
+      - name: Install dependencies and self
+        run: pip install -e .
+      - name: Verify Dependency Integrity
         run: pip check
-
-      - name: Validate Post-Install Hook Syntax
-        # Ensures the custom install script doesn't have syntax errors
-        run: python -m py_compile exasol_bundle/_install.py
-
-      - name: Dry Run CLI Entrypoint
-        # Verifies the fallback CLI command registered in pyproject.toml loads correctly
-        run: exasol-bundle --help
+      - name: Verify CLI command registers
+        run: exa-bundle --help

@@ -1,4 +1,4 @@
 include pyproject.toml
-include setup.py
 include README.md
-recursive-include exasol_bundle *.py
+include install.sh
+recursive-include exa_bundle *.py

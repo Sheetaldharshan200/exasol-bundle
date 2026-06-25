@@ -8,27 +8,20 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    
-    # Required for PyPI Trusted Publisher (OIDC)
     permissions:
       id-token: write
       contents: read
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install build tools
-        run: python -m pip install --upgrade pip build twine
-
+        run: python -m pip install build
       - name: Build Source Distribution
-        # We explicitly only build the sdist (--sdist). 
-        # If we build wheels, pip skips the post-install setup.py hook.
         run: python -m build --sdist
 
       - name: Publish to PyPI

@@ -1,24 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
+  "extends": ["config:recommended"],
   "packageRules": [
     {
       "matchPackageNames": ["exasol-mcp-server", "exasol-json-tables"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
-      "automergeType": "pr",
-      "labels": ["dependencies", "auto-update"]
-    },
-    {
-      "matchPackageNames": ["exasol-mcp-server", "exasol-json-tables"],
-      "matchUpdateTypes": ["major"],
-      "automerge": false,
-      "labels": ["dependencies", "major-update", "requires-manual-review"]
+      "automergeType": "pr"
     }
-  ],
-  "pip_setup": {
-    "fileMatch": ["(^|/)pyproject\\.toml$"]
-  }
+  ]
 }
