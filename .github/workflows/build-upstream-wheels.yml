@@ -74,6 +74,8 @@ jobs:
     name: Attach Wheels to Bundle Release
     needs: [build-wheels]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Download all wheels
         uses: actions/download-artifact@v4
