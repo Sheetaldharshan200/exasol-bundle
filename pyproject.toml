@@ -18,10 +18,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-# Standard pip dependencies. These are the underlying Python components.
 dependencies = [
     "exasol-mcp-server>=2.0,<3.0",
-    "exasol-json-tables>=1.0,<2.0"
+    # REMOVED exasol-json-tables. We handle this manually now.
 ]
 
 [project.scripts]
