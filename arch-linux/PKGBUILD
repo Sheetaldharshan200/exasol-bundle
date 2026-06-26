@@ -1,0 +1,28 @@
+# Maintainer: Exasol Open Source <opensource@exasol.com>
+pkgname=exasol-bundle
+pkgver=1.0.16
+pkgrel=1
+pkgdesc="Universal orchestrator for the Exasol tooling ecosystem"
+arch=('any')
+url="https://github.com/exasol/exa-bundle"
+license=('MIT')
+
+# Dependencies
+depends=('python')
+makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
+
+# AUR conflict management (owns the executable)
+provides=('exa-bundle')
+
+source=("https://files.pythonhosted.org/packages/source/e/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+sha256sums=('REPLACE_WITH_ACTUAL_SHA256_HASH')
+
+build() {
+    cd "$srcdir/${pkgname}-$pkgver"
+    python -m build --wheel --no-isolation
+}
+
+package() {
+    cd "$srcdir/${pkgname}-$pkgver"
+    python -m installer --destdir="$pkgdir" dist/*.whl
+}

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "exasol-bundle"  
-version = "1.0.16"
+version = "1.0.17"
 description = "Universal orchestrator for the Exasol tooling ecosystem"
 readme = "README.md"
 requires-python = ">=3.9"
