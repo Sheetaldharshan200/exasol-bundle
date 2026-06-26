@@ -1,6 +1,6 @@
 import argparse
 import sys
-from exa_bundle import registry
+from exasol_bundle import registry
 
 def main():
     parser = argparse.ArgumentParser(description="Exasol Universal Bundler")

@@ -22,16 +22,40 @@ bootstrap_python() {
             exit 1
         fi
     elif command -v apt-get &> /dev/null; then
-        echo "Installing via APT (Debian/Ubuntu)... (May require sudo password)"
+        echo -e "${YELLOW}[INFO] Python 3 is missing. The following command will be run:${NC}"
+        echo "  sudo apt-get update && sudo apt-get install -y python3 python3-pip python3-venv"
+        read -r -p "Proceed? [y/N] " confirm
+        if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+            echo -e "${RED}[CANCELLED] Please install Python 3 manually, then re-run this script.${NC}"
+            exit 1
+        fi
         sudo apt-get update && sudo apt-get install -y python3 python3-pip python3-venv
     elif command -v dnf &> /dev/null; then
-        echo "Installing via DNF (Fedora/RHEL)..."
+        echo -e "${YELLOW}[INFO] Python 3 is missing. The following command will be run:${NC}"
+        echo "  sudo dnf install -y python3 python3-pip"
+        read -r -p "Proceed? [y/N] " confirm
+        if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+            echo -e "${RED}[CANCELLED] Please install Python 3 manually, then re-run this script.${NC}"
+            exit 1
+        fi
         sudo dnf install -y python3 python3-pip
     elif command -v pacman &> /dev/null; then
-        echo "Installing via Pacman (Arch Linux)..."
+        echo -e "${YELLOW}[INFO] Python 3 is missing. The following command will be run:${NC}"
+        echo "  sudo pacman -S --noconfirm python python-pip"
+        read -r -p "Proceed? [y/N] " confirm
+        if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+            echo -e "${RED}[CANCELLED] Please install Python 3 manually, then re-run this script.${NC}"
+            exit 1
+        fi
         sudo pacman -S --noconfirm python python-pip
     elif command -v zypper &> /dev/null; then
-        echo "Installing via Zypper (openSUSE)..."
+        echo -e "${YELLOW}[INFO] Python 3 is missing. The following command will be run:${NC}"
+        echo "  sudo zypper install -y python3 python3-pip"
+        read -r -p "Proceed? [y/N] " confirm
+        if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+            echo -e "${RED}[CANCELLED] Please install Python 3 manually, then re-run this script.${NC}"
+            exit 1
+        fi
         sudo zypper install -y python3 python3-pip
     else
         echo -e "${RED}[ERROR] Could not detect a supported package manager. Please install Python 3 manually.${NC}"

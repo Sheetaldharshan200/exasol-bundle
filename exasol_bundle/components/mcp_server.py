@@ -3,7 +3,7 @@ import sys
 import json
 import subprocess
 from pathlib import Path
-from exa_bundle.core import ExasolComponent
+from exasol_bundle.core import ExasolComponent
 
 class MCPServerComponent(ExasolComponent):
     @property

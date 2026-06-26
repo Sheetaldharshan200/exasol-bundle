@@ -32,7 +32,10 @@ try {
         if (isWindows) {
             installPythonWindows();
             // We exit here because Windows requires a terminal restart to reload PATH after a winget Python install
-            process.exit(0); 
+            console.log("\n[ACTION REQUIRED] Python has been installed, but your terminal's PATH has not been updated yet.");
+            console.log("Please close this terminal, open a new one, and re-run the installation command:");
+            console.log("  npm install -g exasol-bundle");
+            process.exit(1);
         } else {
             console.error("\n[ERROR] Python 3 is required. Please install it to continue.");
             process.exit(1);

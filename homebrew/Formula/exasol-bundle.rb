@@ -5,9 +5,11 @@ class ExasolBundle < Formula
   homepage "https://github.com/exasol/exa-bundle"
   
   # Replace URL with the actual link to your .tar.gz on PyPI
-  url "https://files.pythonhosted.org/packages/source/e/exasol-bundle/exasol-bundle-1.0.16.tar.gz"
-  # Run `shasum -a 256 exasol-bundle-1.0.16.tar.gz` to get this hash
-  sha256 "REPLACE_WITH_ACTUAL_SHA256_HASH"
+  url "https://files.pythonhosted.org/packages/source/e/exasol-bundle/exasol-bundle-1.0.18.tar.gz"
+  # TODO: Before publishing, compute the real hash with:
+  #   shasum -a 256 exasol-bundle-1.0.18.tar.gz
+  # Then replace the placeholder below with the actual digest.
+  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
   
   license "MIT"
 

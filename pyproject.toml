@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "exasol-bundle"  
-version = "1.0.18"
+version = "1.0.19"
 description = "Universal orchestrator for the Exasol tooling ecosystem"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -20,11 +20,14 @@ classifiers = [
 
 dependencies = [
     "exasol-mcp-server>=2.0,<3.0",
-    # REMOVED exasol-json-tables. We handle this manually now.
+    "exasol-json-tables>=1.0,<2.0",
 ]
 
+[project.optional-dependencies]
+test = ["pytest>=7.0", "hypothesis>=6.100"]
+
 [project.scripts]
-exa-bundle = "exa_bundle.cli:main"
+exa-bundle = "exasol_bundle.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["exa_bundle*"]
+include = ["exasol_bundle*"]

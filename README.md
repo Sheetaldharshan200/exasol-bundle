@@ -1,21 +1,55 @@
-# Exa-Bundle (Universal Exasol Orchestrator)
+# Exasol Bundle
 
-A single installation entrypoint for the modern Exasol ecosystem. This tool automatically fetches OS-native database binaries, installs pre-compiled Rust extensions, and bridges local database secrets to the Exasol MCP Server.
+Exasol Bundle is a simple command-line tool for getting your local Exasol environment into a usable state. It helps you bootstrap the local setup, install the personal database binary, and prepare the MCP workflow from one consistent entrypoint.
 
-## Installation
+## Quick start
 
-**Using `uv` (Recommended):**
-\`\`\`bash
+### Install with uv (recommended)
+```bash
 uv tool install exa-bundle
 exa-bundle init
-\`\`\`
+```
 
-**Using `curl` (Linux / macOS):**
-\`\`\`bash
+### Install with pip
+```bash
+python3 -m pip install --user exasol-bundle
+exa-bundle init
+```
+
+### Install with the shell installer
+```bash
 curl -fsSL https://raw.githubusercontent.com/your-org/exa-bundle/main/install.sh | bash
-\`\`\`
+```
 
-## Usage Commands
-- `exa-bundle init` - Detects your OS and sets up all tools automatically.
-- `exa-bundle start mcp` - Injects local database secrets into the environment and starts the MCP AI Agent.
-- `exa-bundle install personal` - Forces an update of the local database binary.
+### Install with npm
+```bash
+npm install -g exasol-bundle
+```
+
+## Common commands
+
+- `exa-bundle init` runs the initialization flow for the available components.
+- `exa-bundle install personal` installs or refreshes the local personal database binary.
+- `exa-bundle start mcp` prepares the MCP workflow.
+
+## How it works
+
+```mermaid
+flowchart TD
+    A[User runs exa-bundle] --> B[CLI routes the command]
+    B --> C[Component performs setup]
+    C --> D[Local environment is prepared]
+```
+
+## When to use it
+
+Use Exasol Bundle when you want a predictable setup path for:
+- local Exasol tooling
+- the personal database binary
+- MCP-related environment preparation
+
+## Documentation
+
+- [USER_GUIDE.md](USER_GUIDE.md) for step-by-step end-user instructions
+- [ARCHITECTURE.md](ARCHITECTURE.md) for the technical architecture and workflow design
+- [CONTRIBUTING.md](CONTRIBUTING.md) for development and contribution guidance

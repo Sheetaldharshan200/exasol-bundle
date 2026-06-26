@@ -1,6 +1,6 @@
 {
   "name": "exasol-bundle",
-  "version": "1.0.1",
+  "version": "1.0.18",
   "description": "Universal orchestrator for the Exasol tooling ecosystem",
   "bin": {
     "exa-bundle": "bin/wrapper.js"

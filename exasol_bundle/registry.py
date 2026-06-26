@@ -1,8 +1,8 @@
 from typing import List, Optional
-from exa_bundle.core import ExasolComponent
-from exa_bundle.components.personal_db import PersonalDBComponent
-from exa_bundle.components.mcp_server import MCPServerComponent
-from exa_bundle.components.json_tables import JsonTablesComponent
+from exasol_bundle.core import ExasolComponent
+from exasol_bundle.components.personal_db import PersonalDBComponent
+from exasol_bundle.components.mcp_server import MCPServerComponent
+from exasol_bundle.components.json_tables import JsonTablesComponent
 
 _COMPONENTS: List[ExasolComponent] = [
     PersonalDBComponent(),
