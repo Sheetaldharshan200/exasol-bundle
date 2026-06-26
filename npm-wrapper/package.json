@@ -1,12 +1,16 @@
 {
   "name": "exasol-bundle",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Universal orchestrator for the Exasol tooling ecosystem",
   "bin": {
     "exa-bundle": "bin/wrapper.js"
   },
   "engines": {
     "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sheetaldharshan200/exasol-bundle.git"
   },
   "author": "Exasol Open Source",
   "license": "MIT"
